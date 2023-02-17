@@ -31,22 +31,21 @@ class Movie(db.Model):
 
 with app.app_context():
     db.create_all()
-# After adding the new_movie the code needs to be commented out/deleted.
-# So you are not trying to add the same movie twice.
-new_movie = Movie(
-    title="Phone Booth",
-    Year=2002,
-    description="Publicist Stuart Shepard finds himself trapped in a phone booth, pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help, Stuart's negotiation with the caller leads to a jaw-dropping climax.",
-    rating=7.3,
-    ranking=10,
-    review="My favourite character was the caller.",
-    img="https://image.tmdb.org/t/p/w500/tjrX2oWRCM3Tvarz38zlZM7Uc10.jpg"
-)
-with app.app_context():
-    # db.create_all()
-    db.session.add(new_movie)
-    db.session.commit()
-# db.create_all()
+# # After adding the new_movie the code needs to be commented out/deleted.
+# # So you are not trying to add the same movie twice.
+# new_movie = Movie(
+#     title="Phone Booth",
+#     Year=2002,
+#     description="Publicist Stuart Shepard finds himself trapped in a phone booth, pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help, Stuart's negotiation with the caller leads to a jaw-dropping climax.",
+#     rating=7.3,
+#     ranking=10,
+#     review="My favourite character was the caller.",
+#     img="https://image.tmdb.org/t/p/w500/tjrX2oWRCM3Tvarz38zlZM7Uc10.jpg"
+# )
+# with app.app_context():
+#     # db.create_all()
+#     db.session.add(new_movie)
+#     db.session.commit()
 
 @app.route("/")
 def home():
