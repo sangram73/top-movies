@@ -28,6 +28,12 @@ class Movie(db.Model):
     review = db.Column(db.String(250), nullable=True)
     img = db.Column(db.String(250), nullable=False)
 
+class RatemovieForm():
+    rating=StringField("Your rateting out of 10 ")
+    review=StringField("Your review  ")
+    submit=SubmitField("Done")
+    
+    
 
 # After adding the new_movie the code needs to be commented out/deleted.
 # So you are not trying to add the same movie twice.
@@ -55,5 +61,9 @@ def home():
     return render_template("index.html", Movies=all_movies)
 
 
-if __name__ == '__main__':
+    
+    
+
+
+if __name__ == '__main__':    
     app.run(debug=True)
