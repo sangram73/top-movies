@@ -28,12 +28,12 @@ class Movie(db.Model):
     review = db.Column(db.String(250), nullable=True)
     img = db.Column(db.String(250), nullable=False)
 
-class RatemovieForm():
-    rating=StringField("Your rateting out of 10 ")
-    review=StringField("Your review  ")
-    submit=SubmitField("Done")
-    
-    
+
+class RatemovieForm(FlaskForm):
+    rating = StringField("Your rateting out of 10 ")
+    review = StringField("Your review  ")
+    submit = SubmitField("Done")
+
 
 # After adding the new_movie the code needs to be commented out/deleted.
 # So you are not trying to add the same movie twice.
@@ -56,14 +56,21 @@ class RatemovieForm():
 def home():
 
     all_movies = db.session.query(Movie).all()
-    # all_movies = db.session.execute(Movie)
-    # all_movies= db.session.add(Movie)
     return render_template("index.html", Movies=all_movies)
 
 
-    
-    
+@app.route("/edit", methods=["GET", "POST"])
+def rate_movie():
+    form = RatemovieForm()
+    movie_id = request.args.get("id")
+    movie = db.session.get(Movie, movie_id)
+    if form.validate_on_submit():
+        movie.rating = float(form.rating.data)
+        movie.review = form.review.data
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template("edit.html", movie=movie, form=form)
 
 
-if __name__ == '__main__':    
+if __name__ == '__main__':
     app.run(debug=True)
