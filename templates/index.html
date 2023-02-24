@@ -17,26 +17,27 @@
 <div class="container">
   <h1 class="heading">My Top 10 Movies</h1>
   <p class="description">These are my all time favourite movies.</p>
-  {% for Movie in Movies %}
+  {% for movie in movies %}
 
   <div class="card">
-    <div class="front" style="background-image: url('{{Movie.img}}');">
-      <p class="large">{{ Movie.ranking}}</p>
+    <div class="front" style="background-image: url('{{movie.img}}');">
+      <p class="large">{{ movie.ranking}}</p>
+
     </div>
     <div class="back">
       <div>
-        <div class="title">{{ Movie.title }} <span class="release_date">{{ Movie.Year }}</span></div>
+        <div class="title">{{ movie.title }} <span class="release_date">{{ movie.Year }}</span></div>
         <div class="rating">
-          <label>{{ Movie.rating }}</label>
+          <label>{{ movie.rating }}</label>
           <i class="fas fa-star star"></i>
         </div>
-        <p class="review">{{ Movie.review }}</p>
+        <p class="review">{{ movie.review }}</p>
         <p class="overview">
-          {{ Movie.description}}
+          {{ movie.description}}
         </p>
 
-        <a href="{{ url_for('rate_movie', id='Movie.id') }}" class="button">Update</a>
-        <a href="#" class="button delete-button">Delete</a>
+        <a href="{{ url_for('edit_movie', id='movie.id') }}" class="button">Update</a>
+        <a href="{{ url_for('delete', id=movie.id) }}" class="button delete-button">Delete</a>
 
       </div>
     </div>
