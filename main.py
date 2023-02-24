@@ -35,6 +35,10 @@ class RatemovieForm(FlaskForm):
     submit = SubmitField("Done")
 
 
+class MovieAdd(FlaskForm):
+    titel = StringField("type movie name eg: titanic")
+    submit = SubmitField("search")
+
 # After adding the new_movie the code needs to be commented out/deleted.
 # So you are not trying to add the same movie twice.
 # new_movie = Movie(
@@ -71,6 +75,7 @@ def edit_movie():
         return redirect(url_for('home'))
     return render_template("edit.html", Movie=movie, form=form)
 
+
 @app.route('/delete')
 def delete():
     movie_id = request.args.get("id")
@@ -79,4 +84,12 @@ def delete():
     db.session.commit()
     return redirect(url_for("home"))
 
+
+@app.route('/add', methods=["GET", "POST"])
+def add():
+   form = MovieAdd()
+   return render_template("add.html",form=form)
+
+
+if __name__ == '__main__':
     app.run(debug=True)
