@@ -5,13 +5,13 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import requests
+import config
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 Bootstrap(app)
 
 # create database
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movies.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -87,9 +87,15 @@ def delete():
 
 @app.route('/add', methods=["GET", "POST"])
 def add():
-   form = MovieAdd()
-   return render_template("add.html",form=form)
+    form = MovieAdd()
+    if form.validate_on_submit():
+        movie_title = form.titel.data
+        response = requests.get(config.endpoin, params={
+                                "api_key": config.api_key, "query": movie_title})
+        data = response.json()["results"]
+        return render_template("select.html", options=data)
 
+    return render_template("add.html", form=form)
 
 if __name__ == '__main__':
     app.run(debug=True)
